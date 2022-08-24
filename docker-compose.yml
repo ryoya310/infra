@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  app:
+    build: ./docker/php
+    volumes:
+      - ./htdocs:/data
+
+  web:
+    image: nginx:1.20-alpine
+    ports:
+      - 8082:80
+    volumes:
+      - ./htdocs:/data
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    working_dir: /data
+
+  db:
+    build: ./docker/mysql
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/store:/var/lib/mysql
