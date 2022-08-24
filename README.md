@@ -1,26 +1,8 @@
 # 使用方法
 
 docker compose up -d
-docker compose exec app bash
-
-## コンポーザーをインストール他
-
-chmod -R 777 storage bootstrap/cache
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan storage:link
-php artisan migrate
-exit
-
-## Lalabel/ui|auth、Reactインストール
 
 cd htdocs
-
-docker-compose exec app composer require laravel/ui
-docker-compose exec app php artisan ui react --auth
-npm install
-npm ci
 
 ## コマンド一覧
 
