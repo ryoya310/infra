@@ -1,8 +1,20 @@
 # 使用方法
 
 docker compose up -d
+docker compose exec app bash
+
+chmod -R 777 storage bootstrap/cache
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan storage:link
+php artisan migrate
+exit
 
 cd htdocs
+composer require laravel/ui
+php artisan ui bootstrap --auth
+npm install && npm run dev
 
 ## コマンド一覧
 
