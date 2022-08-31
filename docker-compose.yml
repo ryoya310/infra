@@ -1,11 +1,14 @@
 version: "3.9"
+
 services:
-  app:
+  php:
+    container_name: model01-php
     build: ./docker/php
     volumes:
       - ./htdocs:/data
 
   web:
+    container_name: model01-web
     image: nginx:1.20-alpine
     ports:
       - 8080:80
@@ -15,9 +18,32 @@ services:
     working_dir: /data
 
   db:
+    container_name: model01-db
     build: ./docker/mysql
     ports:
       - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASS}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_NAME}'
+      MYSQL_USER: '${DB_USER}'
+      MYSQL_PASSWORD: '${DB_PASS}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
     volumes:
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/mysql/store:/var/lib/mysql
+
+  mailhog:
+    container_name: model01-mail
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    image: mailhog/mailhog
+    environment:
+      MH_STORAGE: maildir
+      MH_MAILDIR_PATH: /tmp
+    volumes:
+      - maildir:/tmp
+
+volumes:
+  maildir: {}
