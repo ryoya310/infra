@@ -2,13 +2,13 @@ version: "3.9"
 
 services:
   php:
-    container_name: model01-php
+    container_name: exsample-php
     build: ./docker/php
     volumes:
       - ./htdocs:/data
 
   web:
-    container_name: model01-web
+    container_name: exsample-web
     image: nginx:1.20-alpine
     ports:
       - 8080:80
@@ -18,7 +18,7 @@ services:
     working_dir: /data
 
   db:
-    container_name: model01-db
+    container_name: exsample-db
     build: ./docker/mysql
     ports:
       - "3306:3306"
@@ -34,7 +34,7 @@ services:
       - ./docker/mysql/store:/var/lib/mysql
 
   mailhog:
-    container_name: model01-mail
+    container_name: exsample-mail
     ports:
       - "1025:1025"
       - "8025:8025"
